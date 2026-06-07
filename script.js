@@ -274,6 +274,7 @@ function renderProjects() {
         <div class="project-tags">${project.tags.map(tag => `<span>${tag}</span>`).join("")}</div>
         <h3>${project.title}</h3>
         <p>${project.short}</p>
+        <a class="project-direct-link" href="${project.notion}" target="_blank" rel="noreferrer">Mở Notion ↗</a>
       </div>
     </article>
   `).join("");
@@ -315,6 +316,7 @@ document.querySelectorAll(".filter-button").forEach(button => {
 });
 
 grid.addEventListener("click", event => {
+  if (event.target.closest("a")) return;
   const card = event.target.closest(".project-card");
   if (card) openProject(card.dataset.project);
 });
@@ -325,6 +327,7 @@ grid.addEventListener("keydown", event => {
 document.querySelectorAll("[data-open-project]").forEach(button => {
   button.addEventListener("click", () => openProject(button.dataset.openProject));
 });
+document.querySelector("[data-print-portfolio]")?.addEventListener("click", () => window.print());
 document.querySelector(".modal-close").addEventListener("click", () => modal.close());
 modal.addEventListener("click", event => {
   if (event.target === modal) modal.close();
