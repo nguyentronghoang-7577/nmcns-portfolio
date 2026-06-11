@@ -28,8 +28,7 @@ const projects = [
       <h3>Kết quả và bài học</h3>
       <p>Tôi hoàn thành quy trình quản lý vòng đời của tệp tin và nhận ra rằng một cấu trúc lưu trữ tốt giúp tiết kiệm thời gian, giảm nhầm lẫn và tạo nền tảng ổn định cho mọi dự án số sau này.</p>
     `,
-    doc: "https://docs.google.com/document/d/1gjwPnn0dtlmaMKETPm_qa4S7dis7PnlTPZqs6ctcpTQ/edit?usp=sharing",
-    notion: "https://app.notion.com/p/377ce95eb99180ecbf01ccd2a43dffd8"
+    doc: "https://docs.google.com/document/d/1gjwPnn0dtlmaMKETPm_qa4S7dis7PnlTPZqs6ctcpTQ/edit?usp=sharing"
   },
   {
     id: 2,
@@ -81,8 +80,7 @@ const projects = [
       <h3>Kết luận</h3>
       <p>AI mang lại tiềm năng lớn trong cá nhân hóa và tối ưu hóa giáo dục, nhưng đòi hỏi phương pháp kiểm tra mới để bảo vệ sự trung thực. Dự án giúp tôi hình thành thói quen tìm kiếm có hệ thống, thiết lập bộ lọc và đánh giá chéo nguồn trước khi sử dụng thông tin.</p>
     `,
-    doc: "https://docs.google.com/document/d/1CJxI-86Jv-P8j7Y_kf5qQ89VTz7uWMNC6_aSrFevh5w/edit?usp=sharing",
-    notion: "https://app.notion.com/p/377ce95eb99180cfa8a1dd96dc732b1c"
+    doc: "https://docs.google.com/document/d/1CJxI-86Jv-P8j7Y_kf5qQ89VTz7uWMNC6_aSrFevh5w/edit?usp=sharing"
   },
   {
     id: 3,
@@ -133,8 +131,7 @@ const projects = [
       <h3>Nguyên tắc rút ra</h3>
       <p>Đừng chỉ yêu cầu “tóm tắt”; hãy nói rõ độ dài, đối tượng đọc, mục đích sử dụng và định dạng mong muốn. Prompt càng cụ thể về bối cảnh và kỳ vọng, AI càng ít tạo ra câu trả lời hời hợt.</p>
     `,
-    doc: "https://docs.google.com/document/d/144sl2kxvvQWyA8o707jRUuP-RCCDiseqCm6FmbVqqkI/edit?usp=sharing",
-    notion: "https://app.notion.com/p/377ce95eb99180c081adfdc526a474c9"
+    doc: "https://docs.google.com/document/d/144sl2kxvvQWyA8o707jRUuP-RCCDiseqCm6FmbVqqkI/edit?usp=sharing"
   },
   {
     id: 4,
@@ -168,8 +165,7 @@ const projects = [
         <tr><td>Tiến độ không đều</td><td>Nhắc tự động trước deadline 24 giờ.</td><td>Tối đa hóa tỷ lệ hoàn thành đúng hạn.</td></tr>
       </tbody></table></div>
     `,
-    doc: "https://docs.google.com/document/d/1Lv0j3XakdBr_uaJkgbDlIHHS_3Z5orwEdyTl-sceIVg/edit?usp=sharing",
-    notion: "https://app.notion.com/p/377ce95eb99180e1a65bd71980867483"
+    doc: "https://docs.google.com/document/d/1Lv0j3XakdBr_uaJkgbDlIHHS_3Z5orwEdyTl-sceIVg/edit?usp=sharing"
   },
   {
     id: 5,
@@ -208,8 +204,7 @@ const projects = [
       <h3>Vai trò của con người</h3>
       <p>AI giúp rút ngắn công việc lặp lại, nhưng người sáng tạo vẫn phải kiểm chứng thông tin, định hướng thẩm mỹ, xử lý bản quyền và chịu trách nhiệm cho sản phẩm cuối cùng. Trong dự án này, đóng góp của con người luôn được duy trì trên 50%.</p>
     `,
-    doc: "https://docs.google.com/document/d/1Wu-_Qfadmjuq9D1UGnpFpkeL2fuj7J-ZWV3pu3_HBdw/edit?usp=sharing",
-    notion: "https://app.notion.com/p/377ce95eb99180a4847fe2f9aaed2bfc"
+    doc: "https://docs.google.com/document/d/1Wu-_Qfadmjuq9D1UGnpFpkeL2fuj7J-ZWV3pu3_HBdw/edit?usp=sharing"
   },
   {
     id: 6,
@@ -253,8 +248,7 @@ const projects = [
       <p>Từ nghiên cứu và bộ nguyên tắc 5K, tôi xây dựng một Infographic bằng Canva kết hợp gợi ý hình ảnh từ AI để truyền tải thông điệp về liêm chính học thuật. Sản phẩm giúp tôi thay đổi cách nhìn: AI không phải kẻ thù hay cây đũa thần, mà là công cụ khuếch đại năng lực khi được sử dụng minh bạch và có trách nhiệm.</p>
       <p>AI không phải kẻ thù của giáo dục, cũng không phải cây đũa thần. Nó là công cụ khuếch đại năng lực, và giá trị của nó phụ thuộc vào cách con người sử dụng.</p>
     `,
-    doc: "https://docs.google.com/document/d/1K0_DLso3PvEgVgYAgbA-KCZi7qtVBH4N3CqEO_SJbmk/edit?usp=sharing",
-    notion: "https://app.notion.com/p/377ce95eb99180b89129d01cfc4e1ce5"
+    doc: "https://docs.google.com/document/d/1K0_DLso3PvEgVgYAgbA-KCZi7qtVBH4N3CqEO_SJbmk/edit?usp=sharing"
   }
 ];
 
@@ -349,15 +343,56 @@ const projectThemes = {
   1: { accent: "#4c60ff", accent2: "#c8ff32", accent3: "#62d9ff", mood: "Digital Foundation", badge: "Gọn gàng · Rõ ràng · Có hệ thống" },
   2: { accent: "#7c3cff", accent2: "#00d4a6", accent3: "#ffcf4a", mood: "Research Lab", badge: "Nguồn tin · Đối chiếu · Tin cậy" },
   3: { accent: "#ff66b3", accent2: "#4c60ff", accent3: "#c8ff32", mood: "Prompt Studio", badge: "Vai trò · Ngữ cảnh · Đầu ra" },
-  4: { accent: "#ff8a00", accent2: "#31d0aa", accent3: "#7c3cff", mood: "Collaboration Hub", badge: "Kanban · Drive · Discord" },
+  4: { accent: "#ff8a00", accent2: "#31d0aa", accent3: "#ffe066", mood: "Collaboration Hub", badge: "Kanban · Drive · Discord" },
   5: { accent: "#00b8ff", accent2: "#ff66b3", accent3: "#ffcf4a", mood: "Creative Lab", badge: "AI · Thiết kế · Biên tập" },
   6: { accent: "#2ed573", accent2: "#4c60ff", accent3: "#ff6b35", mood: "Responsible AI", badge: "5K · Minh bạch · Phản biện" }
+};
+
+const projectOverviews = {
+  1: {
+    role: "Thực hành cá nhân",
+    process: "Tạo, đổi tên, sao chép, di chuyển, xóa và khôi phục tệp theo từng bước có minh chứng.",
+    outcome: "Hoàn thiện cấu trúc lưu trữ rõ ràng và hiểu khác biệt giữa xóa thường, khôi phục và xóa vĩnh viễn.",
+    lesson: "Một hệ thống tệp gọn gàng giúp mọi dự án sau đó dễ kiểm soát hơn."
+  },
+  2: {
+    role: "Người nghiên cứu và đánh giá nguồn",
+    process: "Dùng truy vấn nâng cao, lọc theo loại nguồn, năm xuất bản và đối chiếu nhiều tài liệu độc lập.",
+    outcome: "Tổng hợp 11 nguồn học thuật, chính sách và thực tiễn để phân tích tác động của AI trong giáo dục đại học.",
+    lesson: "Nguồn tốt cần cả độ uy tín, tính cập nhật, phương pháp rõ ràng và khả năng kiểm chứng chéo."
+  },
+  3: {
+    role: "Người thiết kế và kiểm thử Prompt",
+    process: "So sánh Prompt cơ bản, cải tiến và nâng cao trên ba tác vụ học tập thường gặp.",
+    outcome: "Xây dựng framework S.P.I.C.E để kiểm soát vai trò, mục tiêu, bối cảnh, ví dụ và định dạng đầu ra.",
+    lesson: "Prompt càng rõ thì đầu ra càng dễ dùng, nhưng vẫn cần con người kiểm chứng và biên tập."
+  },
+  4: {
+    role: "Thành viên nhóm và điều phối tiến độ",
+    process: "Kết hợp Trello, Google Drive, Google Docs và Discord để quản lý việc nhóm từ xa.",
+    outcome: "Giảm trôi thông tin, hạn chế xung đột phiên bản và duy trì nhịp cập nhật công việc đều đặn.",
+    lesson: "Cộng tác tốt không chỉ là dùng công cụ, mà là thống nhất quy ước và phản hồi đúng lúc."
+  },
+  5: {
+    role: "Biên tập nội dung và thiết kế Infographic",
+    process: "Dùng AI tạo ý tưởng, hình ảnh gợi ý và bố cục ban đầu, sau đó kiểm chứng, rút gọn và chỉnh sửa trong Canva.",
+    outcome: "Hoàn thiện Infographic về du lịch bền vững với thông điệp rõ, hình ảnh nhất quán và dấu ấn cá nhân.",
+    lesson: "AI tăng tốc giai đoạn phác thảo, còn chất lượng cuối phụ thuộc vào lựa chọn và trách nhiệm của người làm."
+  },
+  6: {
+    role: "Người xây dựng nguyên tắc sử dụng AI",
+    process: "Phân tích rủi ro học thuật, quyền riêng tư, sở hữu trí tuệ và tác động đến tư duy phản biện.",
+    outcome: "Đúc kết bộ nguyên tắc 5K để dùng AI minh bạch, có kiểm chứng và không đánh mất vai trò chủ động.",
+    lesson: "AI hữu ích nhất khi được dùng như công cụ hỗ trợ, không phải nơi giao phó toàn bộ suy nghĩ."
+  }
 };
 
 const grid = document.querySelector("#projects-grid");
 const modal = document.querySelector("#project-modal");
 const modalContent = document.querySelector("#modal-content");
 let parallaxFrame;
+let projectCloseTimer;
+let projectCloseSnapshot;
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 const progress = document.createElement("div");
@@ -377,16 +412,31 @@ function renderProjects() {
         <div class="project-tags">${project.tags.map(tag => `<span>${tag}</span>`).join("")}</div>
         <h3>${project.title}</h3>
         <p>${project.short}</p>
-        <a class="project-direct-link" href="${project.notion}" target="_blank" rel="noreferrer">Mở Notion ↗</a>
       </div>
     </article>
   `).join("");
 }
 
+function prepareProjectScene() {
+  const viewportCenter = window.innerHeight / 2;
+  document.querySelectorAll("main > section, footer").forEach(element => {
+    const rect = element.getBoundingClientRect();
+    const isVisible = rect.bottom > 0 && rect.top < window.innerHeight;
+    element.classList.toggle("project-page-scene", isVisible);
+    if (isVisible) {
+      element.style.setProperty("--project-scene-origin-y", `${viewportCenter - rect.top}px`);
+    }
+  });
+}
+
 function openProject(id) {
   const project = projects.find(item => item.id === Number(id));
   if (!project) return;
+  if (projectCloseTimer) clearTimeout(projectCloseTimer);
+  projectCloseTimer = null;
+  modal.classList.remove("project-closing");
   const theme = projectThemes[project.id] || projectThemes[1];
+  const overview = projectOverviews[project.id];
   modalContent.className = `project-theme project-theme-${project.id}`;
   modalContent.style.setProperty("--project-accent", theme.accent);
   modalContent.style.setProperty("--project-accent-2", theme.accent2);
@@ -396,6 +446,7 @@ function openProject(id) {
       <img class="project-document-background-image" src="${project.image}" alt="">
       <div class="project-document-background-overlay"></div>
     </div>
+    <nav class="project-side-nav" aria-label="Điều hướng nội dung dự án"></nav>
     <div class="source-document-header">
       <div class="source-document-info">
         <span class="detail-index">Nội dung nguyên bản / 0${project.id}</span>
@@ -409,27 +460,61 @@ function openProject(id) {
           <div><span>Sản phẩm</span><strong>${project.product}</strong></div>
           <div><span>Điểm nhấn</span><strong>${project.highlight}</strong></div>
         </div>
+        ${overview ? `
+          <div class="project-overview-panel" id="project-overview-${project.id}" aria-label="Tổng quan dự án">
+            <div class="project-overview-item"><span>Vai trò</span><p>${overview.role}</p></div>
+            <div class="project-overview-item"><span>Quy trình</span><p>${overview.process}</p></div>
+            <div class="project-overview-item"><span>Kết quả</span><p>${overview.outcome}</p></div>
+            <div class="project-overview-item"><span>Bài học</span><p>${overview.lesson}</p></div>
+          </div>
+        ` : ""}
         <div class="project-skill-cloud">
           ${project.skills.map(skill => `<span>${skill}</span>`).join("")}
         </div>
         <div class="source-document-links">
           <a class="button primary" href="${project.doc}" target="_blank" rel="noreferrer">Mở Google Docs ↗</a>
-          <a class="button ghost" href="${project.notion}" target="_blank" rel="noreferrer">Mở Notion ↗</a>
         </div>
       </div>
     </div>
-    <article class="native-document">
+    <article class="native-document" id="project-content-${project.id}">
       ${window.projectDocuments?.[project.id] || project.content}
       ${projectSupplements[project.id] || ""}
     </article>
   `;
   modal.showModal();
   normalizeProjectDocumentLists(project.id);
+  bindProjectNavigator();
   modal.classList.remove("project-opening");
   requestAnimationFrame(() => modal.classList.add("project-opening"));
   modal.scrollTop = 0;
   modalContent.querySelector(".project-document-background")?.style.setProperty("--cover-parallax-y", "0px");
+  prepareProjectScene();
+  document.body.classList.add("project-active");
   document.body.style.overflow = "hidden";
+}
+
+function closeProject() {
+  if (!modal.open || modal.classList.contains("project-closing")) return;
+  if (reduceMotion.matches) {
+    modal.close();
+    return;
+  }
+  projectCloseSnapshot?.remove();
+  projectCloseSnapshot = document.createElement("div");
+  projectCloseSnapshot.className = "project-close-snapshot";
+  const snapshotContent = modalContent.cloneNode(true);
+  snapshotContent.removeAttribute("id");
+  snapshotContent.classList.add("project-close-snapshot-content");
+  snapshotContent.style.top = `${-modal.scrollTop}px`;
+  projectCloseSnapshot.append(snapshotContent);
+  modal.append(projectCloseSnapshot);
+  modal.classList.remove("project-opening");
+  modal.classList.add("project-closing");
+  document.body.classList.add("project-returning");
+  projectCloseTimer = window.setTimeout(() => {
+    projectCloseTimer = null;
+    if (modal.open) modal.close();
+  }, 440);
 }
 
 function normalizeProjectDocumentLists(projectId) {
@@ -439,6 +524,89 @@ function normalizeProjectDocumentLists(projectId) {
     list.start = nextListStart;
     nextListStart += list.querySelectorAll(":scope > li").length;
   });
+}
+
+function createProjectAnchorId(text, index) {
+  const base = text
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/đ/g, "d")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "")
+    .slice(0, 42);
+  return `project-section-${base || "muc"}-${index + 1}`;
+}
+
+function bindProjectNavigator() {
+  const nav = modalContent.querySelector(".project-side-nav");
+  if (!nav) return;
+  const overview = modalContent.querySelector(".project-overview-panel");
+  const headings = [...modalContent.querySelectorAll(".native-document h2, .native-document h3")]
+    .filter(heading => !heading.closest(".case-table, table, .content-column, .search-evidence, .output-comparison, .ai-output"))
+    .slice(0, 7);
+  const navItems = [
+    ...(overview ? [{ id: overview.id, label: "Tổng quan" }] : []),
+    ...headings.map((heading, index) => {
+      if (!heading.id) heading.id = createProjectAnchorId(heading.textContent.trim(), index);
+      return { id: heading.id, label: heading.textContent.trim() };
+    })
+  ];
+  nav.innerHTML = navItems.map((item, index) => `
+    <a href="#${item.id}">
+      <span>${String(index + 1).padStart(2, "0")}</span>
+      <span class="project-nav-label">${item.label}</span>
+    </a>
+  `).join("");
+  const links = [...nav.querySelectorAll("a[href^='#']")];
+  links.forEach(link => {
+    link.addEventListener("click", event => {
+      const target = modalContent.querySelector(link.getAttribute("href"));
+      if (!target) return;
+      event.preventDefault();
+      links.forEach(item => item.classList.toggle("active", item === link));
+      centerActiveProjectNavLink(nav, link);
+      scrollProjectModalTo(target);
+    });
+  });
+  updateProjectNavigator();
+}
+
+function getProjectModalTargetTop(target) {
+  const modalTop = modal.getBoundingClientRect().top;
+  return target.getBoundingClientRect().top - modalTop + modal.scrollTop;
+}
+
+function getProjectNavigatorOffset() {
+  return window.matchMedia("(max-width: 900px)").matches ? 18 : 32;
+}
+
+function scrollProjectModalTo(target) {
+  modal.scrollTo({
+    top: Math.max(getProjectModalTargetTop(target) - getProjectNavigatorOffset(), 0),
+    behavior: reduceMotion.matches ? "auto" : "smooth"
+  });
+}
+
+function centerActiveProjectNavLink(nav, activeLink) {
+  if (!nav || nav.scrollWidth <= nav.clientWidth) return;
+  const left = activeLink.offsetLeft - (nav.clientWidth - activeLink.clientWidth) / 2;
+  nav.scrollTo({ left: Math.max(left, 0), behavior: reduceMotion.matches ? "auto" : "smooth" });
+}
+
+function updateProjectNavigator() {
+  const nav = modalContent.querySelector(".project-side-nav");
+  const links = [...modalContent.querySelectorAll(".project-side-nav a[href^='#']")];
+  if (!links.length) return;
+  const activationPoint = modal.scrollTop + getProjectNavigatorOffset() + 10;
+  const current = links
+    .map(link => ({ link, target: modalContent.querySelector(link.getAttribute("href")) }))
+    .filter(item => item.target)
+    .reverse()
+    .find(item => getProjectModalTargetTop(item.target) <= activationPoint);
+  const activeLink = current?.link || links[0];
+  links.forEach(link => link.classList.toggle("active", link === activeLink));
+  centerActiveProjectNavLink(nav, activeLink);
 }
 
 renderProjects();
@@ -470,9 +638,18 @@ document.querySelectorAll("[data-open-project]").forEach(button => {
   button.addEventListener("click", () => openProject(button.dataset.openProject));
 });
 document.querySelector("[data-print-portfolio]")?.addEventListener("click", () => window.print());
-document.querySelector(".modal-close").addEventListener("click", () => modal.close());
+document.querySelector(".modal-close").addEventListener("click", closeProject);
 modal.addEventListener("click", event => {
-  if (event.target === modal) modal.close();
+  if (event.target === modal) closeProject();
+});
+modal.addEventListener("cancel", event => {
+  event.preventDefault();
+  closeProject();
+});
+modal.addEventListener("animationend", event => {
+  if (event.target === modal && event.animationName === "project-zoom-out-in") {
+    modal.classList.remove("project-opening");
+  }
 });
 modal.addEventListener("scroll", () => {
   if (parallaxFrame) return;
@@ -484,13 +661,23 @@ modal.addEventListener("scroll", () => {
       const travel = Math.min(scrollProgress * 36, 36);
       background.style.setProperty("--cover-parallax-y", `${-travel}px`);
     }
+    updateProjectNavigator();
     parallaxFrame = null;
   });
 }, { passive: true });
 modal.addEventListener("close", () => {
+  if (projectCloseTimer) clearTimeout(projectCloseTimer);
+  projectCloseTimer = null;
   if (parallaxFrame) cancelAnimationFrame(parallaxFrame);
   parallaxFrame = null;
-  modal.classList.remove("project-opening");
+  projectCloseSnapshot?.remove();
+  projectCloseSnapshot = null;
+  modal.classList.remove("project-opening", "project-closing");
+  document.body.classList.remove("project-active", "project-returning");
+  document.querySelectorAll(".project-page-scene").forEach(element => {
+    element.classList.remove("project-page-scene");
+    element.style.removeProperty("--project-scene-origin-y");
+  });
   document.body.style.overflow = "";
 });
 
@@ -527,7 +714,6 @@ document.querySelectorAll(".project-card").forEach(card => {
   });
 });
 
-const header = document.querySelector(".site-header");
 const navLinks = [...document.querySelectorAll(".desktop-nav a")];
 const sections = navLinks.map(link => document.querySelector(link.getAttribute("href"))).filter(Boolean);
 let scrollFrame;
@@ -536,9 +722,8 @@ function updateScrollEffects() {
   const scrollTop = window.scrollY;
   const scrollRange = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
   progress.style.setProperty("--scroll-progress", `${scrollTop / scrollRange * 100}%`);
-  header.classList.toggle("scrolled", scrollTop > 50);
-  const current = [...sections].reverse().find(section => section.getBoundingClientRect().top <= 180);
-  navLinks.forEach(link => link.classList.toggle("active", current && link.getAttribute("href") === `#${current.id}`));
+  const current = [...sections].reverse().find(section => scrollTop >= section.offsetTop - 180) || sections[0];
+  navLinks.forEach(link => link.classList.toggle("active", link.getAttribute("href") === `#${current.id}`));
   scrollFrame = null;
 }
 
@@ -546,6 +731,11 @@ window.addEventListener("scroll", () => {
   if (!scrollFrame) scrollFrame = requestAnimationFrame(updateScrollEffects);
 }, { passive: true });
 updateScrollEffects();
+requestAnimationFrame(() => {
+  requestAnimationFrame(() => {
+    document.body.classList.add("hero-background-ready");
+  });
+});
 
 window.addEventListener("pointermove", event => {
   if (reduceMotion.matches) return;
