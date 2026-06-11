@@ -258,9 +258,112 @@ const projects = [
   }
 ];
 
+const projectSupplements = {
+  2: `
+    <section class="rubric-supplement">
+      <span class="supplement-label">Bổ sung theo rubric · Chiến lược tìm kiếm nâng cao</span>
+      <h2>Nhật ký truy vấn và cơ chế lọc thông tin</h2>
+      <p>Thay vì chỉ nhập từ khóa chung, tôi kết hợp cụm từ chính xác, giới hạn tên miền, định dạng tệp và thời gian xuất bản. Mỗi truy vấn phục vụ một mục tiêu riêng trong quá trình thu hẹp phạm vi và kiểm chứng chéo.</p>
+      <div class="search-evidence-grid">
+        <article class="search-evidence">
+          <span>01 · Nguồn chính sách</span>
+          <code>site:unesco.org filetype:pdf "AI and education"</code>
+          <p><strong>site:</strong> giới hạn nguồn UNESCO; <strong>filetype:pdf</strong> ưu tiên báo cáo chính thức; dấu ngoặc kép giữ nguyên cụm chủ đề.</p>
+          <a href="https://www.google.com/search?q=site%3Aunesco.org+filetype%3Apdf+%22AI+and+education%22" target="_blank" rel="noreferrer">Chạy lại truy vấn ↗</a>
+        </article>
+        <article class="search-evidence">
+          <span>02 · Bối cảnh Việt Nam</span>
+          <code>site:edu.vn "AI trong giáo dục đại học"</code>
+          <p>Giới hạn kết quả trong hệ thống giáo dục Việt Nam để tìm nghiên cứu, kỷ yếu và góc nhìn phù hợp với bối cảnh trong nước.</p>
+          <a href="https://www.google.com/search?q=site%3Aedu.vn+%22AI+trong+gi%C3%A1o+d%E1%BB%A5c+%C4%91%E1%BA%A1i+h%E1%BB%8Dc%22" target="_blank" rel="noreferrer">Chạy lại truy vấn ↗</a>
+        </article>
+        <article class="search-evidence">
+          <span>03 · Tìm đúng trọng tâm</span>
+          <code>intitle:"artificial intelligence in education" filetype:pdf</code>
+          <p><strong>intitle:</strong> yêu cầu chủ đề xuất hiện trong tiêu đề, giúp loại bỏ kết quả chỉ nhắc đến AI một cách phụ trợ.</p>
+          <a href="https://www.google.com/search?q=intitle%3A%22artificial+intelligence+in+education%22+filetype%3Apdf" target="_blank" rel="noreferrer">Chạy lại truy vấn ↗</a>
+        </article>
+        <article class="search-evidence">
+          <span>04 · Tính cập nhật</span>
+          <code>"AI academic integrity" after:2023</code>
+          <p><strong>after:</strong> ưu tiên nghiên cứu mới sau khi AI tạo sinh phổ biến, phù hợp với vấn đề liêm chính học thuật hiện tại.</p>
+          <a href="https://www.google.com/search?q=%22AI+academic+integrity%22+after%3A2023" target="_blank" rel="noreferrer">Chạy lại truy vấn ↗</a>
+        </article>
+        <article class="search-evidence">
+          <span>05 · Loại nhiễu thương mại</span>
+          <code>"generative AI" "higher education" -course -advertisement</code>
+          <p>Dấu trừ loại các khóa học và nội dung quảng cáo, giữ lại kết quả phân tích, nghiên cứu và thảo luận học thuật.</p>
+          <a href="https://www.google.com/search?q=%22generative+AI%22+%22higher+education%22+-course+-advertisement" target="_blank" rel="noreferrer">Chạy lại truy vấn ↗</a>
+        </article>
+      </div>
+      <h2>Quy trình chọn và loại nguồn</h2>
+      <div class="case-table-wrap"><table class="case-table"><thead><tr><th>Bước</th><th>Câu hỏi kiểm tra</th><th>Quyết định</th></tr></thead><tbody>
+        <tr><td>Sàng lọc nhanh</td><td>Tiêu đề, tóm tắt và năm xuất bản có đúng phạm vi không?</td><td>Loại kết quả lệch chủ đề hoặc quá cũ.</td></tr>
+        <tr><td>Kiểm tra thẩm quyền</td><td>Tác giả và cơ quan xuất bản có chuyên môn, uy tín không?</td><td>Ưu tiên tạp chí, trường đại học và tổ chức quốc tế.</td></tr>
+        <tr><td>Kiểm tra bằng chứng</td><td>Nguồn có phương pháp, dữ liệu và tài liệu tham khảo rõ ràng không?</td><td>Hạ mức tin cậy nếu chỉ là ý kiến hoặc nội dung quảng bá.</td></tr>
+        <tr><td>Đánh giá chéo</td><td>Kết luận có được ít nhất hai nguồn độc lập hỗ trợ không?</td><td>Chỉ sử dụng nhận định quan trọng sau khi đối chiếu.</td></tr>
+      </tbody></table></div>
+      <div class="case-callout"><strong>Bài học chiến lược</strong><p>Toán tử tìm kiếm không tự bảo đảm nguồn đáng tin cậy. Chúng giúp giảm nhiễu; quyết định cuối cùng vẫn cần đánh giá tác giả, phương pháp, bằng chứng, thiên kiến và tính cập nhật.</p></div>
+    </section>
+  `,
+  3: `
+    <section class="rubric-supplement">
+      <span class="supplement-label">Bổ sung theo rubric · So sánh đầu ra AI</span>
+      <h2>Cùng một tác vụ, chất lượng thay đổi như thế nào?</h2>
+      <p>Tôi so sánh đầu ra mẫu cho tác vụ giải thích khái niệm lạm phát. Nội dung dưới đây minh họa sự khác biệt về độ chính xác, khả năng học tập và mức kiểm soát khi Prompt được cải tiến.</p>
+      <div class="output-comparison">
+        <article>
+          <span>Prompt cơ bản</span>
+          <h3>“Lạm phát là gì?”</h3>
+          <div class="ai-output"><strong>Đầu ra mẫu</strong><p>Lạm phát là sự gia tăng mức giá chung của hàng hóa và dịch vụ theo thời gian, làm giảm sức mua của đồng tiền.</p></div>
+          <ul>
+            <li>Đúng về định nghĩa nhưng giống từ điển.</li>
+            <li>Không biết người đọc là ai và dùng kết quả để làm gì.</li>
+            <li>Thiếu ví dụ, cấu trúc và giới hạn phạm vi.</li>
+          </ul>
+        </article>
+        <article class="advanced-output">
+          <span>Prompt nâng cao</span>
+          <h3>Vai trò + đối tượng + cấu trúc + ví dụ</h3>
+          <div class="ai-output"><strong>Đầu ra mẫu</strong><p>Nếu năm trước 20.000 đồng mua được hai ổ bánh mì nhưng năm nay chỉ mua được một ổ rưỡi, sức mua của tiền đã giảm. Đây là biểu hiện của lạm phát. Lạm phát có thể đến từ chi phí sản xuất tăng, nhu cầu vượt cung hoặc lượng tiền lưu thông tăng nhanh.</p></div>
+          <ul>
+            <li>Điều chỉnh ngôn ngữ cho sinh viên không chuyên.</li>
+            <li>Dùng ví dụ giúp kết nối định nghĩa với đời sống.</li>
+            <li>Cấu trúc rõ nguyên nhân, hệ quả và hướng xử lý.</li>
+          </ul>
+        </article>
+      </div>
+      <h2>Vì sao Prompt nâng cao hoạt động tốt hơn?</h2>
+      <div class="case-table-wrap"><table class="case-table"><thead><tr><th>Thành phần</th><th>Tác động đến AI</th><th>Giá trị cho người học</th></tr></thead><tbody>
+        <tr><td>Persona</td><td>Kích hoạt phong cách và kiến thức phù hợp với vai trò.</td><td>Giải thích có định hướng chuyên môn.</td></tr>
+        <tr><td>Đối tượng đọc</td><td>Điều chỉnh thuật ngữ và độ khó.</td><td>Giảm tải nhận thức, dễ tiếp cận hơn.</td></tr>
+        <tr><td>Cấu trúc đầu ra</td><td>Giảm tính ngẫu nhiên, buộc AI bao phủ các phần cần thiết.</td><td>Dễ ghi chú, so sánh và ôn tập.</td></tr>
+        <tr><td>Ví dụ và giới hạn</td><td>Tạo điểm neo cụ thể, hạn chế trả lời lan man.</td><td>Kết nối lý thuyết với tình huống thực tế.</td></tr>
+      </tbody></table></div>
+      <div class="case-callout"><strong>Kết luận phản biện</strong><p>Prompt tốt không khiến AI luôn đúng. Nó làm yêu cầu rõ hơn và đầu ra dễ kiểm tra hơn. Người dùng vẫn phải xác minh dữ kiện, phát hiện thiên kiến và chỉnh sửa bằng tư duy của mình.</p></div>
+    </section>
+  `
+};
+
+const projectThemes = {
+  1: { accent: "#4c60ff", accent2: "#c8ff32", accent3: "#62d9ff", mood: "Digital Foundation", badge: "Gọn gàng · Rõ ràng · Có hệ thống" },
+  2: { accent: "#7c3cff", accent2: "#00d4a6", accent3: "#ffcf4a", mood: "Research Lab", badge: "Nguồn tin · Đối chiếu · Tin cậy" },
+  3: { accent: "#ff66b3", accent2: "#4c60ff", accent3: "#c8ff32", mood: "Prompt Studio", badge: "Vai trò · Ngữ cảnh · Đầu ra" },
+  4: { accent: "#ff8a00", accent2: "#31d0aa", accent3: "#7c3cff", mood: "Collaboration Hub", badge: "Kanban · Drive · Discord" },
+  5: { accent: "#00b8ff", accent2: "#ff66b3", accent3: "#ffcf4a", mood: "Creative Lab", badge: "AI · Thiết kế · Biên tập" },
+  6: { accent: "#2ed573", accent2: "#4c60ff", accent3: "#ff6b35", mood: "Responsible AI", badge: "5K · Minh bạch · Phản biện" }
+};
+
 const grid = document.querySelector("#projects-grid");
 const modal = document.querySelector("#project-modal");
 const modalContent = document.querySelector("#modal-content");
+let parallaxFrame;
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+const progress = document.createElement("div");
+progress.className = "scroll-progress";
+progress.setAttribute("aria-hidden", "true");
+document.body.append(progress);
 
 function renderProjects() {
   grid.innerHTML = projects.map(project => `
@@ -283,23 +386,59 @@ function renderProjects() {
 function openProject(id) {
   const project = projects.find(item => item.id === Number(id));
   if (!project) return;
+  const theme = projectThemes[project.id] || projectThemes[1];
+  modalContent.className = `project-theme project-theme-${project.id}`;
+  modalContent.style.setProperty("--project-accent", theme.accent);
+  modalContent.style.setProperty("--project-accent-2", theme.accent2);
+  modalContent.style.setProperty("--project-accent-3", theme.accent3);
   modalContent.innerHTML = `
+    <div class="project-document-background" aria-hidden="true">
+      <img class="project-document-background-image" src="${project.image}" alt="">
+      <div class="project-document-background-overlay"></div>
+    </div>
     <div class="source-document-header">
-      <div>
+      <div class="source-document-info">
         <span class="detail-index">Nội dung nguyên bản / 0${project.id}</span>
         <h3>${project.title}</h3>
-        <p>Toàn bộ nội dung nguyên bản được render trực tiếp bằng HTML/CSS của portfolio.</p>
-      </div>
-      <div class="source-document-links">
-        <a class="button primary" href="${project.doc}" target="_blank" rel="noreferrer">Mở Google Docs ↗</a>
-        <a class="button ghost" href="${project.notion}" target="_blank" rel="noreferrer">Mở Notion ↗</a>
+        <p class="source-document-summary">${project.summary}</p>
+        <div class="project-mood-strip">
+          <span>${theme.mood}</span>
+          <span>${theme.badge}</span>
+        </div>
+        <div class="project-hero-facts">
+          <div><span>Sản phẩm</span><strong>${project.product}</strong></div>
+          <div><span>Điểm nhấn</span><strong>${project.highlight}</strong></div>
+        </div>
+        <div class="project-skill-cloud">
+          ${project.skills.map(skill => `<span>${skill}</span>`).join("")}
+        </div>
+        <div class="source-document-links">
+          <a class="button primary" href="${project.doc}" target="_blank" rel="noreferrer">Mở Google Docs ↗</a>
+          <a class="button ghost" href="${project.notion}" target="_blank" rel="noreferrer">Mở Notion ↗</a>
+        </div>
       </div>
     </div>
-    <article class="native-document">${window.projectDocuments?.[project.id] || project.content}</article>
+    <article class="native-document">
+      ${window.projectDocuments?.[project.id] || project.content}
+      ${projectSupplements[project.id] || ""}
+    </article>
   `;
   modal.showModal();
+  normalizeProjectDocumentLists(project.id);
+  modal.classList.remove("project-opening");
+  requestAnimationFrame(() => modal.classList.add("project-opening"));
   modal.scrollTop = 0;
+  modalContent.querySelector(".project-document-background")?.style.setProperty("--cover-parallax-y", "0px");
   document.body.style.overflow = "hidden";
+}
+
+function normalizeProjectDocumentLists(projectId) {
+  if (projectId !== 1) return;
+  let nextListStart = 1;
+  modalContent.querySelectorAll(".native-document > ol").forEach(list => {
+    list.start = nextListStart;
+    nextListStart += list.querySelectorAll(":scope > li").length;
+  });
 }
 
 renderProjects();
@@ -310,7 +449,10 @@ document.querySelectorAll(".filter-button").forEach(button => {
     button.classList.add("active");
     const filter = button.dataset.filter;
     document.querySelectorAll(".project-card").forEach(card => {
-      card.classList.toggle("hidden", filter !== "all" && !card.dataset.categories.includes(filter));
+      const hidden = filter !== "all" && !card.dataset.categories.includes(filter);
+      card.classList.toggle("hidden", hidden);
+      card.classList.remove("filter-enter");
+      if (!hidden) requestAnimationFrame(() => card.classList.add("filter-enter"));
     });
   });
 });
@@ -332,7 +474,23 @@ document.querySelector(".modal-close").addEventListener("click", () => modal.clo
 modal.addEventListener("click", event => {
   if (event.target === modal) modal.close();
 });
+modal.addEventListener("scroll", () => {
+  if (parallaxFrame) return;
+  parallaxFrame = requestAnimationFrame(() => {
+    const background = modalContent.querySelector(".project-document-background");
+    if (background) {
+      const scrollRange = Math.max(modal.scrollHeight - modal.clientHeight, 1);
+      const scrollProgress = modal.scrollTop / scrollRange;
+      const travel = Math.min(scrollProgress * 36, 36);
+      background.style.setProperty("--cover-parallax-y", `${-travel}px`);
+    }
+    parallaxFrame = null;
+  });
+}, { passive: true });
 modal.addEventListener("close", () => {
+  if (parallaxFrame) cancelAnimationFrame(parallaxFrame);
+  parallaxFrame = null;
+  modal.classList.remove("project-opening");
   document.body.style.overflow = "";
 });
 
@@ -340,14 +498,57 @@ const themeButton = document.querySelector(".theme-toggle");
 themeButton.addEventListener("click", () => {
   document.body.classList.toggle("dark");
   themeButton.querySelector(".theme-icon").textContent = document.body.classList.contains("dark") ? "☾" : "☼";
+  themeButton.classList.remove("switching");
+  requestAnimationFrame(() => themeButton.classList.add("switching"));
 });
 
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add("visible");
-      observer.unobserve(entry.target);
-    }
+    entry.target.classList.toggle("visible", entry.isIntersecting);
   });
 }, { threshold: .12 });
-document.querySelectorAll(".reveal").forEach(element => observer.observe(element));
+document.querySelectorAll(".reveal").forEach((element, index) => {
+  element.style.setProperty("--reveal-delay", `${Math.min(index % 4, 3) * 70}ms`);
+  observer.observe(element);
+});
+
+document.querySelectorAll(".project-card").forEach(card => {
+  card.addEventListener("pointermove", event => {
+    if (reduceMotion.matches || event.pointerType === "touch") return;
+    const bounds = card.getBoundingClientRect();
+    const x = (event.clientX - bounds.left) / bounds.width - .5;
+    const y = (event.clientY - bounds.top) / bounds.height - .5;
+    card.style.setProperty("--tilt-x", `${y * -4}deg`);
+    card.style.setProperty("--tilt-y", `${x * 5}deg`);
+  });
+  card.addEventListener("pointerleave", () => {
+    card.style.setProperty("--tilt-x", "0deg");
+    card.style.setProperty("--tilt-y", "0deg");
+  });
+});
+
+const header = document.querySelector(".site-header");
+const navLinks = [...document.querySelectorAll(".desktop-nav a")];
+const sections = navLinks.map(link => document.querySelector(link.getAttribute("href"))).filter(Boolean);
+let scrollFrame;
+
+function updateScrollEffects() {
+  const scrollTop = window.scrollY;
+  const scrollRange = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
+  progress.style.setProperty("--scroll-progress", `${scrollTop / scrollRange * 100}%`);
+  header.classList.toggle("scrolled", scrollTop > 50);
+  const current = [...sections].reverse().find(section => section.getBoundingClientRect().top <= 180);
+  navLinks.forEach(link => link.classList.toggle("active", current && link.getAttribute("href") === `#${current.id}`));
+  scrollFrame = null;
+}
+
+window.addEventListener("scroll", () => {
+  if (!scrollFrame) scrollFrame = requestAnimationFrame(updateScrollEffects);
+}, { passive: true });
+updateScrollEffects();
+
+window.addEventListener("pointermove", event => {
+  if (reduceMotion.matches) return;
+  document.body.style.setProperty("--pointer-x", `${event.clientX}px`);
+  document.body.style.setProperty("--pointer-y", `${event.clientY}px`);
+}, { passive: true });
