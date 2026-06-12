@@ -514,7 +514,7 @@ function closeProject() {
   projectCloseTimer = window.setTimeout(() => {
     projectCloseTimer = null;
     if (modal.open) modal.close();
-  }, 440);
+  }, 850);
 }
 
 function normalizeProjectDocumentLists(projectId) {
