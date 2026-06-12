@@ -537,17 +537,22 @@ body.project-active:not(.project-returning) .site-header {
 }
 .modal-close:hover { background: var(--project-accent); color: #fff; }
 .project-side-nav {
-  position: sticky;
+  position: fixed;
   z-index: 4;
   top: 108px;
   left: max(18px, calc((100vw - 1180px) / 2 - 104px));
   display: grid;
+  grid-auto-rows: max-content;
+  align-content: start;
   gap: 7px;
   width: 150px;
-  height: 0;
+  max-height: calc(100dvh - 126px);
   padding-left: 13px;
   border-left: 1px solid rgba(255,255,255,.22);
+  overflow-y: auto;
+  scrollbar-width: none;
 }
+.project-side-nav::-webkit-scrollbar { display: none; }
 .project-side-nav a {
   display: grid;
   grid-template-columns: 24px minmax(0, 1fr);
@@ -556,7 +561,7 @@ body.project-active:not(.project-returning) .site-header {
   width: 100%;
   min-width: 0;
   min-height: 40px;
-  padding: 9px 8px;
+  padding: 11px 8px 12px;
   border: 1px solid rgba(255,255,255,.12);
   border-radius: 14px;
   background: rgba(17,18,14,.18);
@@ -587,6 +592,7 @@ body.project-active:not(.project-returning) .site-header {
 .project-side-nav .project-nav-label {
   display: block;
   max-width: 100%;
+  padding-bottom: 2px;
   color: inherit;
   font: inherit;
   overflow-wrap: anywhere;
@@ -995,6 +1001,7 @@ footer:hover h2 span { animation: footer-glow 1.8s ease-in-out infinite; }
     display: flex;
     grid-template-columns: none;
     overflow-x: auto;
+    overflow-y: hidden;
     scrollbar-width: none;
     padding: 8px;
     border: 1px solid rgba(255,255,255,.18);
@@ -1004,14 +1011,15 @@ footer:hover h2 span { animation: footer-glow 1.8s ease-in-out infinite; }
     transform: translateX(-50%);
     backdrop-filter: blur(18px);
   }
-  .project-side-nav::-webkit-scrollbar { display: none; }
   .project-side-nav a {
     flex: 0 0 122px;
     grid-template-columns: 1fr;
+    align-items: center;
     justify-items: center;
+    align-content: center;
     gap: 3px;
     min-height: 48px;
-    padding: 7px 6px;
+    padding: 9px 6px 10px;
     border-radius: 12px;
     text-align: center;
   }
@@ -1065,7 +1073,7 @@ footer:hover h2 span { animation: footer-glow 1.8s ease-in-out infinite; }
   .project-side-nav a {
     flex-basis: 104px;
     min-height: 44px;
-    padding: 6px 3px;
+    padding: 8px 3px 9px;
     font-size: 9px;
     letter-spacing: 0;
   }
