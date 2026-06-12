@@ -400,6 +400,41 @@ progress.className = "scroll-progress";
 progress.setAttribute("aria-hidden", "true");
 document.body.append(progress);
 
+const pagePortrait = document.querySelector(".page-portrait-background img");
+const hero = document.querySelector(".hero");
+const pagePortraitMetrics = {
+  heroEnd: window.innerHeight,
+  scrollRange: 1,
+  travel: 0,
+  lastY: null
+};
+
+function updatePagePortrait() {
+  if (!pagePortrait?.complete || !pagePortrait.naturalWidth || modal?.open || reduceMotion.matches) return;
+  const portraitProgress = Math.min(Math.max(
+    (window.scrollY - pagePortraitMetrics.heroEnd) / pagePortraitMetrics.scrollRange,
+    0
+  ), 1);
+  const nextY = Math.round(-pagePortraitMetrics.travel * portraitProgress * 10) / 10;
+  if (nextY === pagePortraitMetrics.lastY) return;
+  pagePortraitMetrics.lastY = nextY;
+  pagePortrait.style.setProperty("--page-portrait-y", `${nextY}px`);
+}
+
+function measurePagePortrait() {
+  const heroEnd = hero?.offsetHeight || window.innerHeight;
+  const scrollEnd = Math.max(document.documentElement.scrollHeight - window.innerHeight, heroEnd + 1);
+  pagePortraitMetrics.heroEnd = heroEnd;
+  pagePortraitMetrics.scrollRange = Math.max(scrollEnd - heroEnd, 1);
+  pagePortraitMetrics.travel = pagePortrait?.complete && pagePortrait.naturalWidth
+    ? Math.max(pagePortrait.offsetHeight - window.innerHeight, 0)
+    : 0;
+  pagePortraitMetrics.lastY = null;
+  updatePagePortrait();
+}
+
+pagePortrait?.addEventListener("load", measurePagePortrait);
+
 function renderProjects() {
   grid.innerHTML = projects.map(project => `
     <article class="project-card reveal" data-categories="${project.category.join(" ")}" data-project="${project.id}" tabindex="0">
@@ -441,6 +476,9 @@ function openProject(id) {
   modalContent.style.setProperty("--project-accent", theme.accent);
   modalContent.style.setProperty("--project-accent-2", theme.accent2);
   modalContent.style.setProperty("--project-accent-3", theme.accent3);
+  modal.style.setProperty("--project-accent", theme.accent);
+  modal.style.setProperty("--project-accent-2", theme.accent2);
+  modal.style.setProperty("--project-accent-3", theme.accent3);
   modalContent.innerHTML = `
     <div class="project-document-background" aria-hidden="true">
       <img class="project-document-background-image" src="${project.image}" alt="">
@@ -514,7 +552,7 @@ function closeProject() {
   projectCloseTimer = window.setTimeout(() => {
     projectCloseTimer = null;
     if (modal.open) modal.close();
-  }, 850);
+  }, 1280);
 }
 
 function normalizeProjectDocumentLists(projectId) {
@@ -717,12 +755,21 @@ document.querySelectorAll(".project-card").forEach(card => {
 const navLinks = [...document.querySelectorAll(".desktop-nav a")];
 const sections = navLinks.map(link => document.querySelector(link.getAttribute("href"))).filter(Boolean);
 let scrollFrame;
+let resizeFrame;
+let scrollRange = 1;
+let sectionOffsets = [];
+
+function measureScrollEffects() {
+  scrollRange = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
+  sectionOffsets = sections.map(section => ({ section, top: section.offsetTop }));
+  measurePagePortrait();
+}
 
 function updateScrollEffects() {
   const scrollTop = window.scrollY;
-  const scrollRange = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
-  progress.style.setProperty("--scroll-progress", `${scrollTop / scrollRange * 100}%`);
-  const current = [...sections].reverse().find(section => scrollTop >= section.offsetTop - 180) || sections[0];
+  progress.style.setProperty("--scroll-progress", `${scrollTop / scrollRange}`);
+  updatePagePortrait();
+  const current = [...sectionOffsets].reverse().find(item => scrollTop >= item.top - 180)?.section || sections[0];
   navLinks.forEach(link => link.classList.toggle("active", link.getAttribute("href") === `#${current.id}`));
   scrollFrame = null;
 }
@@ -730,15 +777,50 @@ function updateScrollEffects() {
 window.addEventListener("scroll", () => {
   if (!scrollFrame) scrollFrame = requestAnimationFrame(updateScrollEffects);
 }, { passive: true });
-updateScrollEffects();
-requestAnimationFrame(() => {
-  requestAnimationFrame(() => {
-    document.body.classList.add("hero-background-ready");
+window.addEventListener("resize", () => {
+  if (resizeFrame) cancelAnimationFrame(resizeFrame);
+  resizeFrame = requestAnimationFrame(() => {
+    measureScrollEffects();
+    resizeFrame = null;
   });
-});
+}, { passive: true });
+measureScrollEffects();
+
+function waitForWindowLoad() {
+  if (document.readyState === "complete") return Promise.resolve();
+  return new Promise(resolve => window.addEventListener("load", resolve, { once: true }));
+}
+
+function waitForPageImages() {
+  return Promise.all([...document.images].map(image => {
+    image.loading = "eager";
+    if (image.complete) return image.decode?.().catch(() => {}) || Promise.resolve();
+    return new Promise(resolve => {
+      image.addEventListener("load", resolve, { once: true });
+      image.addEventListener("error", resolve, { once: true });
+    });
+  }));
+}
+
+async function revealLoadedPage() {
+  await Promise.all([
+    waitForWindowLoad(),
+    document.fonts?.ready || Promise.resolve(),
+    waitForPageImages()
+  ]);
+  measureScrollEffects();
+  document.body.classList.remove("page-loading");
+  document.body.classList.add("page-opening");
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    document.body.classList.add("hero-background-ready");
+  }));
+  window.setTimeout(() => document.body.classList.remove("page-opening"), 1050);
+}
+
+revealLoadedPage();
 
 window.addEventListener("pointermove", event => {
-  if (reduceMotion.matches) return;
+  if (reduceMotion.matches || event.target.closest(".hero-visual")) return;
   document.body.style.setProperty("--pointer-x", `${event.clientX}px`);
   document.body.style.setProperty("--pointer-y", `${event.clientY}px`);
 }, { passive: true });
