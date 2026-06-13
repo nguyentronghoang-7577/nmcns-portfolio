@@ -1,0 +1,23 @@
+{
+  "name": "portfolio---lite",
+  "version": "1.0.0",
+  "description": "",
+  "main": "project-content.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nguyentronghoang-7577/nmcns-portfolio.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/nguyentronghoang-7577/nmcns-portfolio/issues"
+  },
+  "homepage": "https://github.com/nguyentronghoang-7577/nmcns-portfolio#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.60.0",
+    "@types/node": "^25.9.3"
+  }
+}

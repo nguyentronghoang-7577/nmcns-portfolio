@@ -340,12 +340,12 @@ const projectSupplements = {
 };
 
 const projectThemes = {
-  1: { accent: "#4c60ff", accent2: "#c8ff32", accent3: "#62d9ff", mood: "Digital Foundation", badge: "Gọn gàng · Rõ ràng · Có hệ thống" },
-  2: { accent: "#7c3cff", accent2: "#00d4a6", accent3: "#ffcf4a", mood: "Research Lab", badge: "Nguồn tin · Đối chiếu · Tin cậy" },
-  3: { accent: "#ff66b3", accent2: "#4c60ff", accent3: "#c8ff32", mood: "Prompt Studio", badge: "Vai trò · Ngữ cảnh · Đầu ra" },
-  4: { accent: "#ff8a00", accent2: "#31d0aa", accent3: "#ffe066", mood: "Collaboration Hub", badge: "Kanban · Drive · Discord" },
-  5: { accent: "#00b8ff", accent2: "#ff66b3", accent3: "#ffcf4a", mood: "Creative Lab", badge: "AI · Thiết kế · Biên tập" },
-  6: { accent: "#2ed573", accent2: "#4c60ff", accent3: "#ff6b35", mood: "Responsible AI", badge: "5K · Minh bạch · Phản biện" }
+  1: { accent: "#6f7f5f", accent2: "#d7a85c", accent3: "#f3d9a5", mood: "Digital Foundation", badge: "Gọn gàng · Rõ ràng · Có hệ thống" },
+  2: { accent: "#2f6f73", accent2: "#b88952", accent3: "#d7e7df", mood: "Research Lab", badge: "Nguồn tin · Đối chiếu · Tin cậy" },
+  3: { accent: "#6e5cff", accent2: "#23c7d9", accent3: "#d7d2ff", mood: "Prompt Studio", badge: "Vai trò · Ngữ cảnh · Đầu ra" },
+  4: { accent: "#d06f45", accent2: "#3c9f9b", accent3: "#ffd6a6", mood: "Collaboration Hub", badge: "Kanban · Drive · Discord" },
+  5: { accent: "#d8893a", accent2: "#d75f7a", accent3: "#ffe0a8", mood: "Creative Lab", badge: "AI · Thiết kế · Biên tập" },
+  6: { accent: "#4f8f6b", accent2: "#68c3b0", accent3: "#d8f1df", mood: "Responsible AI", badge: "5K · Minh bạch · Phản biện" }
 };
 
 const projectOverviews = {
@@ -392,6 +392,7 @@ const modal = document.querySelector("#project-modal");
 const modalContent = document.querySelector("#modal-content");
 let parallaxFrame;
 let projectCloseTimer;
+let projectReturnTimer;
 let projectCloseSnapshot;
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
@@ -400,56 +401,37 @@ progress.className = "scroll-progress";
 progress.setAttribute("aria-hidden", "true");
 document.body.append(progress);
 
-const pagePortrait = document.querySelector(".page-portrait-background img");
 const hero = document.querySelector(".hero");
-const pagePortraitMetrics = {
+const scrollMetrics = {
   heroEnd: window.innerHeight,
-  scrollRange: 1,
-  travel: 0,
-  lastY: null
+  scrollRange: 1
 };
 
-function updatePagePortrait() {
-  if (!pagePortrait?.complete || !pagePortrait.naturalWidth || modal?.open || reduceMotion.matches) return;
-  const portraitProgress = Math.min(Math.max(
-    (window.scrollY - pagePortraitMetrics.heroEnd) / pagePortraitMetrics.scrollRange,
-    0
-  ), 1);
-  const nextY = Math.round(-pagePortraitMetrics.travel * portraitProgress * 10) / 10;
-  if (nextY === pagePortraitMetrics.lastY) return;
-  pagePortraitMetrics.lastY = nextY;
-  pagePortrait.style.setProperty("--page-portrait-y", `${nextY}px`);
-}
-
-function measurePagePortrait() {
+function measureHeroScrollRange() {
   const heroEnd = hero?.offsetHeight || window.innerHeight;
   const scrollEnd = Math.max(document.documentElement.scrollHeight - window.innerHeight, heroEnd + 1);
-  pagePortraitMetrics.heroEnd = heroEnd;
-  pagePortraitMetrics.scrollRange = Math.max(scrollEnd - heroEnd, 1);
-  pagePortraitMetrics.travel = pagePortrait?.complete && pagePortrait.naturalWidth
-    ? Math.max(pagePortrait.offsetHeight - window.innerHeight, 0)
-    : 0;
-  pagePortraitMetrics.lastY = null;
-  updatePagePortrait();
+  scrollMetrics.heroEnd = heroEnd;
+  scrollMetrics.scrollRange = Math.max(scrollEnd - heroEnd, 1);
 }
 
-pagePortrait?.addEventListener("load", measurePagePortrait);
-
 function renderProjects() {
-  grid.innerHTML = projects.map(project => `
-    <article class="project-card reveal" data-categories="${project.category.join(" ")}" data-project="${project.id}" tabindex="0">
-      <div class="project-image">
-        <img src="${project.image}" alt="${project.title}" loading="lazy">
-        <span class="project-number">DỰ ÁN / 0${project.id}</span>
-        <span class="project-open">↗</span>
-      </div>
-      <div class="project-info">
-        <div class="project-tags">${project.tags.map(tag => `<span>${tag}</span>`).join("")}</div>
-        <h3>${project.title}</h3>
-        <p>${project.short}</p>
-      </div>
-    </article>
-  `).join("");
+  grid.innerHTML = projects.map(project => {
+    const theme = projectThemes[project.id] || projectThemes[1];
+    return `
+      <article class="project-card reveal" data-categories="${project.category.join(" ")}" data-project="${project.id}" tabindex="0" style="--card-accent: ${theme.accent}; --card-accent-2: ${theme.accent2}; --card-accent-3: ${theme.accent3};">
+        <div class="project-image">
+          <img src="${project.image}" alt="${project.title}" loading="lazy">
+          <span class="project-number">DỰ ÁN / 0${project.id}</span>
+          <span class="project-open">↗</span>
+        </div>
+        <div class="project-info">
+          <div class="project-tags">${project.tags.map(tag => `<span>${tag}</span>`).join("")}</div>
+          <h3>${project.title}</h3>
+          <p>${project.short}</p>
+        </div>
+      </article>
+    `;
+  }).join("");
 }
 
 function prepareProjectScene() {
@@ -469,6 +451,9 @@ function openProject(id) {
   if (!project) return;
   if (projectCloseTimer) clearTimeout(projectCloseTimer);
   projectCloseTimer = null;
+  if (projectReturnTimer) clearTimeout(projectReturnTimer);
+  projectReturnTimer = null;
+  document.body.classList.remove("project-returning");
   modal.classList.remove("project-closing");
   const theme = projectThemes[project.id] || projectThemes[1];
   const overview = projectOverviews[project.id];
@@ -670,7 +655,10 @@ grid.addEventListener("click", event => {
 });
 grid.addEventListener("keydown", event => {
   const card = event.target.closest(".project-card");
-  if (card && (event.key === "Enter" || event.key === " ")) openProject(card.dataset.project);
+  if (card && (event.key === "Enter" || event.key === " ")) {
+    event.preventDefault();
+    openProject(card.dataset.project);
+  }
 });
 document.querySelectorAll("[data-open-project]").forEach(button => {
   button.addEventListener("click", () => openProject(button.dataset.openProject));
@@ -711,12 +699,17 @@ modal.addEventListener("close", () => {
   projectCloseSnapshot?.remove();
   projectCloseSnapshot = null;
   modal.classList.remove("project-opening", "project-closing");
-  document.body.classList.remove("project-active", "project-returning");
+  document.body.classList.remove("project-active");
   document.querySelectorAll(".project-page-scene").forEach(element => {
     element.classList.remove("project-page-scene");
     element.style.removeProperty("--project-scene-origin-y");
   });
   document.body.style.overflow = "";
+  if (projectReturnTimer) clearTimeout(projectReturnTimer);
+  projectReturnTimer = window.setTimeout(() => {
+    document.body.classList.remove("project-returning");
+    projectReturnTimer = null;
+  }, 2900);
 });
 
 const themeButton = document.querySelector(".theme-toggle");
@@ -743,8 +736,8 @@ document.querySelectorAll(".project-card").forEach(card => {
     const bounds = card.getBoundingClientRect();
     const x = (event.clientX - bounds.left) / bounds.width - .5;
     const y = (event.clientY - bounds.top) / bounds.height - .5;
-    card.style.setProperty("--tilt-x", `${y * -4}deg`);
-    card.style.setProperty("--tilt-y", `${x * 5}deg`);
+    card.style.setProperty("--tilt-x", `${y * -8}deg`);
+    card.style.setProperty("--tilt-y", `${x * 10}deg`);
   });
   card.addEventListener("pointerleave", () => {
     card.style.setProperty("--tilt-x", "0deg");
@@ -752,25 +745,28 @@ document.querySelectorAll(".project-card").forEach(card => {
   });
 });
 
-const navLinks = [...document.querySelectorAll(".desktop-nav a")];
+const navLinks = [...document.querySelectorAll(".desktop-nav a, .side-rail-left a")];
 const sections = navLinks.map(link => document.querySelector(link.getAttribute("href"))).filter(Boolean);
 let scrollFrame;
 let resizeFrame;
 let scrollRange = 1;
 let sectionOffsets = [];
+let activeSectionId = "";
 
 function measureScrollEffects() {
   scrollRange = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
   sectionOffsets = sections.map(section => ({ section, top: section.offsetTop }));
-  measurePagePortrait();
+  measureHeroScrollRange();
 }
 
 function updateScrollEffects() {
   const scrollTop = window.scrollY;
   progress.style.setProperty("--scroll-progress", `${scrollTop / scrollRange}`);
-  updatePagePortrait();
   const current = [...sectionOffsets].reverse().find(item => scrollTop >= item.top - 180)?.section || sections[0];
-  navLinks.forEach(link => link.classList.toggle("active", link.getAttribute("href") === `#${current.id}`));
+  if (current?.id && current.id !== activeSectionId) {
+    activeSectionId = current.id;
+    navLinks.forEach(link => link.classList.toggle("active", link.getAttribute("href") === `#${activeSectionId}`));
+  }
   scrollFrame = null;
 }
 
@@ -785,6 +781,7 @@ window.addEventListener("resize", () => {
   });
 }, { passive: true });
 measureScrollEffects();
+updateScrollEffects();
 
 function waitForWindowLoad() {
   if (document.readyState === "complete") return Promise.resolve();
@@ -803,21 +800,15 @@ function waitForPageImages() {
 }
 
 async function revealLoadedPage() {
-  await Promise.all([
-    waitForWindowLoad(),
-    document.fonts?.ready || Promise.resolve(),
-    waitForPageImages()
-  ]);
+  await Promise.all([waitForWindowLoad(), document.fonts?.ready || Promise.resolve()]);
   measureScrollEffects();
-  document.body.classList.remove("page-loading");
-  document.body.classList.add("page-opening");
   requestAnimationFrame(() => requestAnimationFrame(() => {
     document.body.classList.add("hero-background-ready");
   }));
-  window.setTimeout(() => document.body.classList.remove("page-opening"), 1050);
 }
 
 revealLoadedPage();
+window.setTimeout(() => document.body.classList.remove("page-opening"), 1050);
 
 window.addEventListener("pointermove", event => {
   if (reduceMotion.matches || event.target.closest(".hero-visual")) return;

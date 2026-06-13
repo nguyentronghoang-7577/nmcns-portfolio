@@ -1,0 +1,77 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Modal close regression test</title>
+<pre id="result">running</pre>
+<iframe id="page" src="index.html" style="width:1440px;height:1000px;border:0"></iframe>
+<script>
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+const frame = document.querySelector("#page");
+const result = document.querySelector("#result");
+
+function done(payload) {
+  result.textContent = JSON.stringify(payload, null, 2);
+  document.body.dataset.done = "true";
+}
+
+async function waitFor(condition, timeout = 5000) {
+  const start = performance.now();
+  while (performance.now() - start < timeout) {
+    if (condition()) return true;
+    await delay(50);
+  }
+  return false;
+}
+
+frame.addEventListener("load", async () => {
+  try {
+    const w = frame.contentWindow;
+    const d = frame.contentDocument;
+    await delay(1600);
+
+    const tests = [];
+    const scrollTargets = [0, 420, 1600, Math.max(d.documentElement.scrollHeight - w.innerHeight - 40, 0)];
+
+    for (const targetY of scrollTargets) {
+      w.scrollTo(0, targetY);
+      await delay(120);
+      const beforeY = w.scrollY;
+      w.openProject(1);
+      const opened = await waitFor(() => d.querySelector("#project-modal")?.open);
+      const modal = d.querySelector("#project-modal");
+      modal.scrollTop = Math.min(2200, Math.max(modal.scrollHeight - modal.clientHeight, 0));
+      modal.dispatchEvent(new Event("scroll"));
+      await delay(120);
+      w.closeProject();
+      const closed = await waitFor(() => !modal.open, 3000);
+      await delay(900);
+
+      const bodyAfter = w.getComputedStyle(d.body, "::after");
+      tests.push({
+        requestedScrollY: targetY,
+        beforeY,
+        afterY: w.scrollY,
+        opened,
+        closed,
+        modalOpen: modal.open,
+        bodyPosition: d.body.style.position,
+        bodyTop: d.body.style.top,
+        bodyClasses: d.body.className,
+        backdropImageVisible: bodyAfter.backgroundImage.includes("me-2-content-blurred.jpg"),
+        backdropTransform: bodyAfter.transform,
+        scrollRestored: Math.abs(w.scrollY - beforeY) <= 1,
+        bodyUnlocked: !d.body.style.position && !d.body.style.top,
+        noActiveProjectClasses: !d.body.classList.contains("project-active") && !d.body.classList.contains("project-returning")
+      });
+
+      await delay(2300);
+    }
+
+    done({
+      ok: tests.every(test => test.opened && test.closed && test.scrollRestored && test.bodyUnlocked && test.noActiveProjectClasses && test.backdropImageVisible),
+      tests
+    });
+  } catch (error) {
+    done({ ok: false, error: String(error.stack || error) });
+  }
+});
+</script>
