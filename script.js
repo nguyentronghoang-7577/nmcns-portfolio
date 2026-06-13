@@ -252,10 +252,9 @@ const projects = [
   }
 ];
 
-const projectSupplements = {
+const projectMainSections = {
   2: `
-    <section class="rubric-supplement">
-      <span class="supplement-label">Bổ sung theo rubric · Chiến lược tìm kiếm nâng cao</span>
+    <section class="project-integrated-section" id="project-search-strategy">
       <h2>Nhật ký truy vấn và cơ chế lọc thông tin</h2>
       <p>Thay vì chỉ nhập từ khóa chung, tôi kết hợp cụm từ chính xác, giới hạn tên miền, định dạng tệp và thời gian xuất bản. Mỗi truy vấn phục vụ một mục tiêu riêng trong quá trình thu hẹp phạm vi và kiểm chứng chéo.</p>
       <div class="search-evidence-grid">
@@ -301,8 +300,7 @@ const projectSupplements = {
     </section>
   `,
   3: `
-    <section class="rubric-supplement">
-      <span class="supplement-label">Bổ sung theo rubric · So sánh đầu ra AI</span>
+    <section class="project-integrated-section" id="project-output-comparison">
       <h2>Cùng một tác vụ, chất lượng thay đổi như thế nào?</h2>
       <p>Tôi so sánh đầu ra mẫu cho tác vụ giải thích khái niệm lạm phát. Nội dung dưới đây minh họa sự khác biệt về độ chính xác, khả năng học tập và mức kiểm soát khi Prompt được cải tiến.</p>
       <div class="output-comparison">
@@ -387,6 +385,42 @@ const projectOverviews = {
   }
 };
 
+const projectNavDefinitions = {
+  1: [
+    { type: "overview", label: "Tổng quan" },
+    { type: "content", label: "Nội dung chính" },
+    { type: "heading", label: "Quy trình thực hiện", match: ["Quy trình", "Sản phẩm"] }
+  ],
+  2: [
+    { type: "overview", label: "Tổng quan" },
+    { type: "content", label: "Đánh giá nguồn" },
+    { type: "selector", selector: "#project-search-strategy", label: "Tìm kiếm nâng cao" },
+    { type: "heading", label: "Lọc và đối chiếu", match: ["Quy trình chọn", "Bài học chiến lược"] }
+  ],
+  3: [
+    { type: "overview", label: "Tổng quan" },
+    { type: "content", label: "Bộ prompt" },
+    { type: "heading", label: "Framework S.P.I.C.E", match: ["S.P.I.C.E", "Nguyên tắc"] },
+    { type: "selector", selector: "#project-output-comparison", label: "So sánh đầu ra" }
+  ],
+  4: [
+    { type: "overview", label: "Tổng quan" },
+    { type: "content", label: "Cộng tác trực tuyến" },
+    { type: "heading", label: "Quy trình nhóm", match: ["Quy trình", "Trello", "Google", "Discord"] }
+  ],
+  5: [
+    { type: "overview", label: "Tổng quan" },
+    { type: "content", label: "Thiết kế infographic" },
+    { type: "heading", label: "Quy trình với AI", match: ["Quy trình", "AI", "Infographic"] }
+  ],
+  6: [
+    { type: "overview", label: "Tổng quan" },
+    { type: "content", label: "AI có trách nhiệm" },
+    { type: "heading", label: "Bộ nguyên tắc 5K", match: ["5K", "Nguyên tắc"] },
+    { type: "heading", label: "Infographic", match: ["Infographic", "kết luận"] }
+  ]
+};
+
 const grid = document.querySelector("#projects-grid");
 const modal = document.querySelector("#project-modal");
 const modalContent = document.querySelector("#modal-content");
@@ -424,6 +458,7 @@ function renderProjects() {
           <span class="project-number">DỰ ÁN / 0${project.id}</span>
           <span class="project-open">↗</span>
         </div>
+        <span class="project-pointer-light" aria-hidden="true"></span>
         <div class="project-info">
           <div class="project-tags">${project.tags.map(tag => `<span>${tag}</span>`).join("")}</div>
           <h3>${project.title}</h3>
@@ -462,7 +497,7 @@ function openProject(id) {
   if (projectReturnTimer) clearTimeout(projectReturnTimer);
   projectReturnTimer = null;
   document.body.classList.remove("project-returning");
-  modal.classList.remove("project-closing");
+  modal.classList.remove("project-closing", "project-opening");
   const theme = projectThemes[project.id] || projectThemes[1];
   const overview = projectOverviews[project.id];
   modalContent.className = `project-theme project-theme-${project.id}`;
@@ -480,7 +515,7 @@ function openProject(id) {
     <nav class="project-side-nav" aria-label="Điều hướng nội dung dự án"></nav>
     <div class="source-document-header">
       <div class="source-document-info">
-        <span class="detail-index">Nội dung nguyên bản / 0${project.id}</span>
+        <span class="detail-index">Dự án học tập / 0${project.id}</span>
         <h3>${project.title}</h3>
         <p class="source-document-summary">${project.summary}</p>
         <div class="project-mood-strip">
@@ -502,18 +537,16 @@ function openProject(id) {
         <div class="project-skill-cloud">
           ${project.skills.map(skill => `<span>${skill}</span>`).join("")}
         </div>
-        <div class="source-document-links">
-          <a class="button primary" href="${project.doc}" target="_blank" rel="noreferrer">Mở Google Docs ↗</a>
-        </div>
       </div>
     </div>
     <article class="native-document" id="project-content-${project.id}">
       ${window.projectDocuments?.[project.id] || project.content}
-      ${projectSupplements[project.id] || ""}
+      ${projectMainSections[project.id] || ""}
     </article>
   `;
   modal.showModal();
   normalizeProjectDocumentLists(project.id);
+  placeProjectMainSections(project.id);
   bindProjectNavigator();
   modal.classList.remove("project-opening");
   requestAnimationFrame(() => modal.classList.add("project-opening"));
@@ -557,6 +590,37 @@ function normalizeProjectDocumentLists(projectId) {
   });
 }
 
+function moveElementAfterNearestHeading(element, fragments = []) {
+  if (!element) return;
+  const normalizedFragments = fragments.map(fragment => fragment.toLowerCase());
+  const targetHeading = [...modalContent.querySelectorAll(".native-document h2, .native-document h3")]
+    .filter(heading => !heading.closest(".project-integrated-section"))
+    .find(heading => {
+      const text = heading.textContent.trim().toLowerCase();
+      return normalizedFragments.some(fragment => text.includes(fragment));
+    });
+  if (targetHeading?.parentNode) {
+    targetHeading.insertAdjacentElement("afterend", element);
+  }
+}
+
+function placeProjectMainSections(projectId) {
+  if (projectId === 2) {
+    moveElementAfterNearestHeading(modalContent.querySelector("#project-search-strategy"), [
+      "chiến lược tìm kiếm",
+      "tìm kiếm",
+      "đánh giá nguồn"
+    ]);
+  }
+  if (projectId === 3) {
+    moveElementAfterNearestHeading(modalContent.querySelector("#project-output-comparison"), [
+      "kết quả phân tích",
+      "phân tích hiệu quả",
+      "so sánh"
+    ]);
+  }
+}
+
 function createProjectAnchorId(text, index) {
   const base = text
     .normalize("NFD")
@@ -569,20 +633,49 @@ function createProjectAnchorId(text, index) {
   return `project-section-${base || "muc"}-${index + 1}`;
 }
 
+function getProjectHeadingByText(projectId, fragments = []) {
+  const normalizedFragments = fragments.map(fragment => fragment.toLowerCase());
+  return [...modalContent.querySelectorAll(".native-document h2, .native-document h3")]
+    .filter(heading => !heading.closest(".case-table, table, .content-column, .search-evidence, .output-comparison, .ai-output"))
+    .find((heading, index) => {
+      const text = heading.textContent.trim().toLowerCase();
+      if (!normalizedFragments.some(fragment => text.includes(fragment))) return false;
+      if (!heading.id) heading.id = createProjectAnchorId(heading.textContent.trim(), index);
+      return true;
+    }) || null;
+}
+
+function resolveProjectNavItem(projectId, definition) {
+  if (definition.type === "overview") {
+    const overview = modalContent.querySelector(".project-overview-panel");
+    return overview ? { id: overview.id, label: definition.label } : null;
+  }
+  if (definition.type === "content") {
+    return { id: `project-content-${projectId}`, label: definition.label };
+  }
+  if (definition.type === "selector") {
+    const target = modalContent.querySelector(definition.selector);
+    return target ? { id: target.id, label: definition.label } : null;
+  }
+  if (definition.type === "heading") {
+    const heading = getProjectHeadingByText(projectId, definition.match || []);
+    return heading ? { id: heading.id, label: definition.label } : null;
+  }
+  return null;
+}
+
 function bindProjectNavigator() {
   const nav = modalContent.querySelector(".project-side-nav");
   if (!nav) return;
-  const overview = modalContent.querySelector(".project-overview-panel");
-  const headings = [...modalContent.querySelectorAll(".native-document h2, .native-document h3")]
-    .filter(heading => !heading.closest(".case-table, table, .content-column, .search-evidence, .output-comparison, .ai-output"))
-    .slice(0, 7);
-  const navItems = [
-    ...(overview ? [{ id: overview.id, label: "Tổng quan" }] : []),
-    ...headings.map((heading, index) => {
-      if (!heading.id) heading.id = createProjectAnchorId(heading.textContent.trim(), index);
-      return { id: heading.id, label: heading.textContent.trim() };
-    })
+  const projectId = Number(modalContent.className.match(/project-theme-(\d+)/)?.[1] || 0);
+  const definitions = projectNavDefinitions[projectId] || [
+    { type: "overview", label: "Tổng quan" },
+    { type: "content", label: "Nội dung chính" }
   ];
+  const seen = new Set();
+  const navItems = definitions
+    .map(definition => resolveProjectNavItem(projectId, definition))
+    .filter(item => item && !seen.has(item.id) && seen.add(item.id));
   nav.innerHTML = navItems.map((item, index) => `
     <a href="#${item.id}">
       <span>${String(index + 1).padStart(2, "0")}</span>
@@ -596,7 +689,7 @@ function bindProjectNavigator() {
       if (!target) return;
       event.preventDefault();
       links.forEach(item => item.classList.toggle("active", item === link));
-      centerActiveProjectNavLink(nav, link);
+      revealActiveProjectNavLink(nav, link, true);
       scrollProjectModalTo(target);
     });
   });
@@ -619,10 +712,29 @@ function scrollProjectModalTo(target) {
   });
 }
 
-function centerActiveProjectNavLink(nav, activeLink) {
-  if (!nav || nav.scrollWidth <= nav.clientWidth) return;
-  const left = activeLink.offsetLeft - (nav.clientWidth - activeLink.clientWidth) / 2;
-  nav.scrollTo({ left: Math.max(left, 0), behavior: reduceMotion.matches ? "auto" : "smooth" });
+function revealActiveProjectNavLink(nav, activeLink, smooth = false) {
+  if (!nav || !activeLink) return;
+  const behavior = smooth && !reduceMotion.matches ? "smooth" : "auto";
+  const padding = 8;
+  const linkLeft = activeLink.offsetLeft;
+  const linkRight = linkLeft + activeLink.offsetWidth;
+  const linkTop = activeLink.offsetTop;
+  const linkBottom = linkTop + activeLink.offsetHeight;
+  const nextScroll = {};
+
+  if (linkLeft < nav.scrollLeft + padding) {
+    nextScroll.left = Math.max(linkLeft - padding, 0);
+  } else if (linkRight > nav.scrollLeft + nav.clientWidth - padding) {
+    nextScroll.left = Math.min(linkRight - nav.clientWidth + padding, nav.scrollWidth - nav.clientWidth);
+  }
+
+  if (linkTop < nav.scrollTop + padding) {
+    nextScroll.top = Math.max(linkTop - padding, 0);
+  } else if (linkBottom > nav.scrollTop + nav.clientHeight - padding) {
+    nextScroll.top = Math.min(linkBottom - nav.clientHeight + padding, nav.scrollHeight - nav.clientHeight);
+  }
+
+  if (Object.keys(nextScroll).length) nav.scrollTo({ ...nextScroll, behavior });
 }
 
 function updateProjectNavigator() {
@@ -636,8 +748,9 @@ function updateProjectNavigator() {
     .reverse()
     .find(item => getProjectModalTargetTop(item.target) <= activationPoint);
   const activeLink = current?.link || links[0];
+  const activeChanged = !activeLink.classList.contains("active");
   links.forEach(link => link.classList.toggle("active", link === activeLink));
-  centerActiveProjectNavLink(nav, activeLink);
+  if (activeChanged) revealActiveProjectNavLink(nav, activeLink);
 }
 
 renderProjects();
@@ -681,7 +794,10 @@ modal.addEventListener("cancel", event => {
   closeProject();
 });
 modal.addEventListener("animationend", event => {
-  if (event.target === modal && event.animationName === "project-zoom-out-in") {
+  if (
+    event.animationName === "project-document-focus-in" &&
+    event.target.classList.contains("native-document")
+  ) {
     modal.classList.remove("project-opening");
   }
 });
@@ -720,14 +836,6 @@ modal.addEventListener("close", () => {
   }, 2900);
 });
 
-const themeButton = document.querySelector(".theme-toggle");
-themeButton.addEventListener("click", () => {
-  document.body.classList.toggle("dark");
-  themeButton.querySelector(".theme-icon").textContent = document.body.classList.contains("dark") ? "☾" : "☼";
-  themeButton.classList.remove("switching");
-  requestAnimationFrame(() => themeButton.classList.add("switching"));
-});
-
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     entry.target.classList.toggle("visible", entry.isIntersecting);
@@ -738,22 +846,30 @@ document.querySelectorAll(".reveal").forEach((element, index) => {
   observer.observe(element);
 });
 
-document.querySelectorAll(".project-card").forEach(card => {
+document.querySelectorAll(".project-card, .principle-card, .reflection-card").forEach(card => {
   card.addEventListener("pointermove", event => {
     if (reduceMotion.matches || event.pointerType === "touch") return;
     const bounds = card.getBoundingClientRect();
-    const x = (event.clientX - bounds.left) / bounds.width - .5;
-    const y = (event.clientY - bounds.top) / bounds.height - .5;
-    card.style.setProperty("--tilt-x", `${y * -8}deg`);
-    card.style.setProperty("--tilt-y", `${x * 10}deg`);
+    const pointerX = event.clientX - bounds.left;
+    const pointerY = event.clientY - bounds.top;
+    const x = pointerX / bounds.width - .5;
+    const y = pointerY / bounds.height - .5;
+    card.style.setProperty("--light-x", `${pointerX}px`);
+    card.style.setProperty("--light-y", `${pointerY}px`);
+    if (card.classList.contains("project-card")) {
+      card.style.setProperty("--tilt-x", `${y * -8}deg`);
+      card.style.setProperty("--tilt-y", `${x * 10}deg`);
+    }
   });
   card.addEventListener("pointerleave", () => {
-    card.style.setProperty("--tilt-x", "0deg");
-    card.style.setProperty("--tilt-y", "0deg");
+    if (card.classList.contains("project-card")) {
+      card.style.setProperty("--tilt-x", "0deg");
+      card.style.setProperty("--tilt-y", "0deg");
+    }
   });
 });
 
-const navLinks = [...document.querySelectorAll(".desktop-nav a, .side-rail-left a")];
+const navLinks = [...document.querySelectorAll(".side-rail-left a")];
 const sections = navLinks.map(link => document.querySelector(link.getAttribute("href"))).filter(Boolean);
 let scrollFrame;
 let resizeFrame;
@@ -763,14 +879,21 @@ let activeSectionId = "";
 
 function measureScrollEffects() {
   scrollRange = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
-  sectionOffsets = sections.map(section => ({ section, top: section.offsetTop }));
+  sectionOffsets = sections.map(section => ({
+    section,
+    top: section.getBoundingClientRect().top + window.scrollY
+  }));
   measureHeroScrollRange();
 }
 
 function updateScrollEffects() {
   const scrollTop = window.scrollY;
   progress.style.setProperty("--scroll-progress", `${scrollTop / scrollRange}`);
-  const current = [...sectionOffsets].reverse().find(item => scrollTop >= item.top - 180)?.section || sections[0];
+  const activationPoint = scrollTop + Math.min(window.innerHeight * .36, 240);
+  const atPageEnd = scrollTop >= scrollRange - 2;
+  const current = atPageEnd
+    ? sections.at(-1)
+    : [...sectionOffsets].reverse().find(item => activationPoint >= item.top)?.section || sections[0];
   if (current?.id && current.id !== activeSectionId) {
     activeSectionId = current.id;
     navLinks.forEach(link => link.classList.toggle("active", link.getAttribute("href") === `#${activeSectionId}`));
