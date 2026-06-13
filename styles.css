@@ -881,9 +881,10 @@ h1 { font-size: clamp(40px, 4.8vw, 66px); line-height: 1.04; margin: 26px 0 28px
 }
 .case-table td { background: color-mix(in srgb, var(--project-accent) 4%, transparent); }
 .project-modal {
-  inset: 0; width: 100vw; height: 100vh; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 0;
+  inset: 0; width: 100vw; inline-size: 100dvw; height: 100vh; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 0;
   border: 0; border-radius: 0; background: var(--bg); color: var(--text);
-  box-shadow: var(--shadow); overflow: auto;
+  box-sizing: border-box;
+  box-shadow: var(--shadow); overflow-y: auto; overflow-x: clip;
 }
 .project-modal.project-opening {
   transform-origin: 50% 38%;
@@ -1000,7 +1001,7 @@ body.project-active:not(.project-returning) .side-rail {
   --project-accent: var(--blue);
   --project-accent-2: var(--pink);
   --project-accent-3: var(--lime);
-  position: relative; min-height: 100%; isolation: isolate;
+  position: relative; width: 100%; max-width: 100%; min-height: 100%; isolation: isolate; box-sizing: border-box; overflow-x: clip;
   background:
     linear-gradient(180deg,
       color-mix(in srgb, var(--project-accent) 11%, rgba(0,0,0,.28)) 0%,
@@ -1010,12 +1011,12 @@ body.project-active:not(.project-returning) .side-rail {
 }
 .project-document-background {
   --cover-parallax-y: 0px;
-  position: fixed; z-index: -2; inset: 0; overflow: hidden; pointer-events: none; background: var(--surface);
+  position: fixed; z-index: -2; inset: 0; width: 100vw; inline-size: 100dvw; height: 100dvh; overflow: clip; contain: paint; pointer-events: none; background: var(--surface);
 }
 .project-document-background-image {
-  position: absolute; inset: -10%; width: 120%; height: 120%; object-fit: cover;
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
   opacity: .38; filter: blur(7px) saturate(.92) contrast(.96);
-  transform: translate3d(0, var(--cover-parallax-y), 0) scale(1.02); will-change: transform;
+  transform: translate3d(0, var(--cover-parallax-y), 0); will-change: transform;
 }
 .project-document-background-overlay {
   position: absolute; inset: 0;
@@ -1064,6 +1065,7 @@ body.project-active:not(.project-returning) .side-rail {
   padding-left: 13px;
   border-left: 1px solid rgba(255,255,255,.22);
   overflow-y: auto;
+  contain: paint;
   scrollbar-width: none;
 }
 .project-side-nav::-webkit-scrollbar { display: none; }
@@ -1483,8 +1485,8 @@ body.page-opening::after {
   to { opacity: 0; transform: translateY(-12px) scale(1.035); filter: blur(6px); }
 }
 @keyframes project-background-close-out {
-  from { opacity: .38; transform: translate3d(0, var(--cover-parallax-y), 0) scale(1.02); filter: blur(7px) saturate(.92) contrast(.96); }
-  to { opacity: .08; transform: translate3d(0, var(--cover-parallax-y), 0) scale(1.12); filter: blur(10px) saturate(1.02) contrast(.98); }
+  from { opacity: .38; transform: translate3d(0, var(--cover-parallax-y), 0); filter: blur(7px) saturate(.92) contrast(.96); }
+  to { opacity: .08; transform: translate3d(0, var(--cover-parallax-y), 0); filter: blur(10px) saturate(1.02) contrast(.98); }
 }
 @keyframes project-close-control {
   from { opacity: 1; }
@@ -1563,9 +1565,9 @@ body.page-opening::after {
   }
 }
 @keyframes project-image-focus-in {
-  0% { opacity: 0; transform: translate3d(0, var(--cover-parallax-y), 0) scale(1.38); }
+  0% { opacity: 0; transform: translate3d(0, var(--cover-parallax-y), 0); }
   55% { opacity: .3; }
-  100% { opacity: .38; transform: translate3d(0, var(--cover-parallax-y), 0) scale(1.02); }
+  100% { opacity: .38; transform: translate3d(0, var(--cover-parallax-y), 0); }
 }
 @keyframes project-hero-glow-in {
   from { opacity: 0; transform: scale(1.22); }
@@ -1781,6 +1783,94 @@ body.page-opening::after {
   .reflection-card h3 { font-size: clamp(21px, 6.4vw, 26px); }
   footer { margin: 8px; padding: 48px 20px; display: block; }
   .footer-links { align-items: start; margin-top: 60px; }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .side-rail {
+    display: none;
+  }
+
+  .site-header {
+    width: min(1040px, calc(100dvw - 24px));
+  }
+
+  .content-deck {
+    width: min(calc(100dvw - 24px), 1040px);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .project-modal {
+    width: 100vw;
+    inline-size: 100dvw;
+    max-inline-size: 100dvw;
+    overflow-x: clip;
+  }
+
+  #modal-content,
+  .project-close-snapshot-content {
+    width: 100dvw;
+    max-width: 100dvw;
+    margin-inline: 0;
+  }
+
+  .project-document-background {
+    width: 100dvw;
+    inline-size: 100dvw;
+  }
+
+  .project-side-nav {
+    position: fixed;
+    top: auto;
+    left: 50%;
+    bottom: max(8px, env(safe-area-inset-bottom));
+    width: min(680px, calc(100dvw - 28px));
+    display: flex;
+    grid-template-columns: none;
+    overflow-x: auto;
+    overflow-y: hidden;
+    gap: 6px;
+    padding: 8px;
+    border: 1px solid rgba(255,255,255,.18);
+    border-radius: 18px;
+    background: rgba(17,18,14,.56);
+    box-shadow: 0 16px 44px rgba(0,0,0,.28);
+    transform: translateX(-50%);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
+
+  .project-side-nav a {
+    flex: 0 0 clamp(104px, 18vw, 132px);
+    grid-template-columns: 1fr;
+    align-items: center;
+    justify-items: center;
+    align-content: center;
+    gap: 3px;
+    min-height: 44px;
+    padding: 8px 5px 9px;
+    border-radius: 12px;
+    text-align: center;
+  }
+
+  .project-side-nav a:hover,
+  .project-side-nav a.active {
+    transform: translateY(-3px);
+  }
+
+  .source-document-header {
+    padding-inline: clamp(18px, 5vw, 48px);
+  }
+
+  .source-document-info {
+    box-sizing: border-box;
+  }
+
+  .native-document {
+    width: min(900px, calc(100dvw - 28px));
+    box-sizing: border-box;
+    padding-bottom: max(92px, calc(72px + env(safe-area-inset-bottom)));
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
