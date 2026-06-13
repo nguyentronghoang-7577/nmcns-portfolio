@@ -436,10 +436,18 @@ function renderProjects() {
 
 function prepareProjectScene() {
   const viewportCenter = window.innerHeight / 2;
-  document.querySelectorAll("main > section, footer").forEach(element => {
+  document.querySelectorAll("main > section, main > .content-deck, footer").forEach(element => {
     const rect = element.getBoundingClientRect();
     const isVisible = rect.bottom > 0 && rect.top < window.innerHeight;
     element.classList.toggle("project-page-scene", isVisible);
+    if (isVisible) {
+      element.style.setProperty("--project-scene-origin-y", `${viewportCenter - rect.top}px`);
+    }
+  });
+  document.querySelectorAll(".content-deck > .section").forEach(element => {
+    const rect = element.getBoundingClientRect();
+    const isVisible = rect.bottom > 0 && rect.top < window.innerHeight;
+    element.classList.toggle("project-deck-object-scene", isVisible);
     if (isVisible) {
       element.style.setProperty("--project-scene-origin-y", `${viewportCenter - rect.top}px`);
     }
@@ -700,8 +708,8 @@ modal.addEventListener("close", () => {
   projectCloseSnapshot = null;
   modal.classList.remove("project-opening", "project-closing");
   document.body.classList.remove("project-active");
-  document.querySelectorAll(".project-page-scene").forEach(element => {
-    element.classList.remove("project-page-scene");
+  document.querySelectorAll(".project-page-scene, .project-deck-object-scene").forEach(element => {
+    element.classList.remove("project-page-scene", "project-deck-object-scene");
     element.style.removeProperty("--project-scene-origin-y");
   });
   document.body.style.overflow = "";
