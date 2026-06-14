@@ -338,12 +338,12 @@ const projectMainSections = {
 };
 
 const projectThemes = {
-  1: { accent: "#6f7f5f", accent2: "#d7a85c", accent3: "#f3d9a5", mood: "Digital Foundation", badge: "Gọn gàng · Rõ ràng · Có hệ thống" },
-  2: { accent: "#2f6f73", accent2: "#b88952", accent3: "#d7e7df", mood: "Research Lab", badge: "Nguồn tin · Đối chiếu · Tin cậy" },
-  3: { accent: "#6e5cff", accent2: "#23c7d9", accent3: "#d7d2ff", mood: "Prompt Studio", badge: "Vai trò · Ngữ cảnh · Đầu ra" },
-  4: { accent: "#d06f45", accent2: "#3c9f9b", accent3: "#ffd6a6", mood: "Collaboration Hub", badge: "Kanban · Drive · Discord" },
-  5: { accent: "#d8893a", accent2: "#d75f7a", accent3: "#ffe0a8", mood: "Creative Lab", badge: "AI · Thiết kế · Biên tập" },
-  6: { accent: "#4f8f6b", accent2: "#68c3b0", accent3: "#d8f1df", mood: "Responsible AI", badge: "5K · Minh bạch · Phản biện" }
+  1: { accent: "#b8bd8f", accent2: "#d9b36f", accent3: "#f3dfb7", mood: "Digital Foundation", badge: "Gọn gàng · Rõ ràng · Có hệ thống" },
+  2: { accent: "#9eb9b0", accent2: "#c69a68", accent3: "#e3e7d8", mood: "Research Lab", badge: "Nguồn tin · Đối chiếu · Tin cậy" },
+  3: { accent: "#a99bff", accent2: "#7edce6", accent3: "#e5e1ff", mood: "Prompt Studio", badge: "Vai trò · Ngữ cảnh · Đầu ra" },
+  4: { accent: "#93b8d6", accent2: "#e6a07e", accent3: "#dcefff", mood: "Collaboration Hub", badge: "Kanban · Drive · Discord" },
+  5: { accent: "#e9a0b8", accent2: "#f0bf8c", accent3: "#ffe0ea", mood: "Creative Lab", badge: "AI · Thiết kế · Biên tập" },
+  6: { accent: "#9aa8df", accent2: "#8ed4c5", accent3: "#e3e8ff", mood: "Responsible AI", badge: "5K · Minh bạch · Phản biện" }
 };
 
 const projectOverviews = {
@@ -428,6 +428,7 @@ let parallaxFrame;
 let projectCloseTimer;
 let projectReturnTimer;
 let projectCloseSnapshot;
+let projectLoadSequence = 0;
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 const progress = document.createElement("div");
@@ -458,7 +459,9 @@ function renderProjects() {
           <span class="project-number">DỰ ÁN / 0${project.id}</span>
           <span class="project-open">↗</span>
         </div>
-        <span class="project-pointer-light" aria-hidden="true"></span>
+        <span class="project-light-clip" aria-hidden="true">
+          <span class="project-pointer-light"></span>
+        </span>
         <div class="project-info">
           <div class="project-tags">${project.tags.map(tag => `<span>${tag}</span>`).join("")}</div>
           <h3>${project.title}</h3>
@@ -489,15 +492,89 @@ function prepareProjectScene() {
   });
 }
 
+function updateProjectLoadProgress(value) {
+  const normalizedValue = Math.max(0, Math.min(Math.round(value), 100));
+  modal.style.setProperty("--project-load-progress", `${normalizedValue}%`);
+  const valueLabel = modal.querySelector("[data-project-load-value]");
+  if (valueLabel) valueLabel.textContent = normalizedValue;
+}
+
+function waitForProjectImage(image) {
+  image.loading = "eager";
+  if (image.complete) return image.decode?.().catch(() => {}) || Promise.resolve();
+  return new Promise(resolve => {
+    image.addEventListener("load", resolve, { once: true });
+    image.addEventListener("error", resolve, { once: true });
+  }).then(() => image.decode?.().catch(() => {}) || Promise.resolve());
+}
+
+function waitForProjectRender() {
+  return new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+}
+
+function waitForProjectOpeningToSettle() {
+  if (reduceMotion.matches) return waitForProjectRender();
+  const animatedDocument = modalContent.querySelector(".native-document");
+  if (!animatedDocument) return waitForProjectRender();
+
+  return new Promise(resolve => {
+    let settled = false;
+    const finish = () => {
+      if (settled) return;
+      settled = true;
+      animatedDocument.removeEventListener("animationend", handleAnimationEnd);
+      window.clearTimeout(fallbackTimer);
+      requestAnimationFrame(() => requestAnimationFrame(resolve));
+    };
+    const handleAnimationEnd = event => {
+      if (event.animationName === "project-document-focus-in") finish();
+    };
+    const fallbackTimer = window.setTimeout(finish, 1800);
+    animatedDocument.addEventListener("animationend", handleAnimationEnd);
+  });
+}
+
+async function finishProjectLoading(loadSequence) {
+  const images = [...modalContent.querySelectorAll("img")];
+  const tasks = [
+    ...images.map(image => () => waitForProjectImage(image)),
+    () => document.fonts?.ready || Promise.resolve(),
+    waitForProjectRender,
+    waitForProjectOpeningToSettle
+  ];
+  let completedTasks = 0;
+
+  await Promise.all(tasks.map(async task => {
+    await task();
+    completedTasks += 1;
+    if (loadSequence === projectLoadSequence) {
+      updateProjectLoadProgress(completedTasks / tasks.length * 100);
+    }
+  }));
+
+  if (loadSequence !== projectLoadSequence || !modal.open) return;
+  updateProjectLoadProgress(100);
+  modal.classList.remove("project-loading");
+  modal.classList.add("project-load-complete");
+  modal.removeAttribute("aria-busy");
+  window.setTimeout(() => {
+    if (loadSequence === projectLoadSequence) modal.classList.remove("project-load-complete");
+  }, 450);
+}
+
 function openProject(id) {
   const project = projects.find(item => item.id === Number(id));
   if (!project) return;
+  const loadSequence = ++projectLoadSequence;
   if (projectCloseTimer) clearTimeout(projectCloseTimer);
   projectCloseTimer = null;
   if (projectReturnTimer) clearTimeout(projectReturnTimer);
   projectReturnTimer = null;
   document.body.classList.remove("project-returning");
-  modal.classList.remove("project-closing", "project-opening");
+  modal.classList.remove("project-closing", "project-opening", "project-load-complete");
+  modal.classList.add("project-loading");
+  modal.setAttribute("aria-busy", "true");
+  updateProjectLoadProgress(0);
   const theme = projectThemes[project.id] || projectThemes[1];
   const overview = projectOverviews[project.id];
   modalContent.className = `project-theme project-theme-${project.id}`;
@@ -555,10 +632,14 @@ function openProject(id) {
   prepareProjectScene();
   document.body.classList.add("project-active");
   document.body.style.overflow = "hidden";
+  finishProjectLoading(loadSequence);
 }
 
 function closeProject() {
   if (!modal.open || modal.classList.contains("project-closing")) return;
+  projectLoadSequence += 1;
+  modal.classList.remove("project-loading", "project-load-complete");
+  modal.removeAttribute("aria-busy");
   if (reduceMotion.matches) {
     modal.close();
     return;
@@ -802,6 +883,10 @@ modal.addEventListener("animationend", event => {
   }
 });
 modal.addEventListener("scroll", () => {
+  if (modal.classList.contains("project-loading")) {
+    modal.scrollTop = 0;
+    return;
+  }
   if (parallaxFrame) return;
   parallaxFrame = requestAnimationFrame(() => {
     const background = modalContent.querySelector(".project-document-background");
@@ -815,14 +900,30 @@ modal.addEventListener("scroll", () => {
     parallaxFrame = null;
   });
 }, { passive: true });
+modal.addEventListener("wheel", event => {
+  if (modal.classList.contains("project-loading")) event.preventDefault();
+}, { passive: false });
+modal.addEventListener("touchmove", event => {
+  if (modal.classList.contains("project-loading")) event.preventDefault();
+}, { passive: false });
+modal.addEventListener("keydown", event => {
+  if (
+    modal.classList.contains("project-loading") &&
+    ["ArrowDown", "ArrowUp", "PageDown", "PageUp", "Home", "End", " "].includes(event.key)
+  ) {
+    event.preventDefault();
+  }
+});
 modal.addEventListener("close", () => {
+  projectLoadSequence += 1;
   if (projectCloseTimer) clearTimeout(projectCloseTimer);
   projectCloseTimer = null;
   if (parallaxFrame) cancelAnimationFrame(parallaxFrame);
   parallaxFrame = null;
   projectCloseSnapshot?.remove();
   projectCloseSnapshot = null;
-  modal.classList.remove("project-opening", "project-closing");
+  modal.classList.remove("project-opening", "project-closing", "project-loading", "project-load-complete");
+  modal.removeAttribute("aria-busy");
   document.body.classList.remove("project-active");
   document.querySelectorAll(".project-page-scene, .project-deck-object-scene").forEach(element => {
     element.classList.remove("project-page-scene", "project-deck-object-scene");
@@ -836,17 +937,7 @@ modal.addEventListener("close", () => {
   }, 2900);
 });
 
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    entry.target.classList.toggle("visible", entry.isIntersecting);
-  });
-}, { threshold: .12 });
-document.querySelectorAll(".reveal").forEach((element, index) => {
-  element.style.setProperty("--reveal-delay", `${Math.min(index % 4, 3) * 70}ms`);
-  observer.observe(element);
-});
-
-document.querySelectorAll(".project-card, .principle-card, .reflection-card").forEach(card => {
+document.querySelectorAll(".project-card, .principle-card, .reflection-card, .five-k-list > div, .footer-metrics > div").forEach(card => {
   card.addEventListener("pointermove", event => {
     if (reduceMotion.matches || event.pointerType === "touch") return;
     const bounds = card.getBoundingClientRect();
@@ -939,7 +1030,22 @@ async function revealLoadedPage() {
 }
 
 revealLoadedPage();
-window.setTimeout(() => document.body.classList.remove("page-opening"), 1050);
+
+function finishPageOpening() {
+  document.body.classList.remove("page-opening");
+}
+
+if (reduceMotion.matches) {
+  finishPageOpening();
+} else {
+  const pageOpeningTarget = document.querySelector("main");
+  const openingFallback = window.setTimeout(finishPageOpening, 2300);
+  pageOpeningTarget?.addEventListener("animationend", event => {
+    if (event.animationName !== "page-zoom-out-in") return;
+    window.clearTimeout(openingFallback);
+    finishPageOpening();
+  }, { once: true });
+}
 
 window.addEventListener("pointermove", event => {
   if (reduceMotion.matches || event.target.closest(".hero-visual")) return;
